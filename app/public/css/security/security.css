@@ -1,0 +1,29 @@
+.access-denied-card {
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.access-denied-icon {
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(220, 53, 69, 0.12);
+    color: #dc3545;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.access-denied-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.access-denied-text {
+    color: var(--app-muted);
+    max-width: 540px;
+    margin: 0 auto;
+}

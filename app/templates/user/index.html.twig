@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Список користувачів{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/user/user.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block page_header %}
+    <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-4">
+        <div>
+            <h1 class="h2 fw-bold mb-1">Список користувачів</h1>
+        </div>
+
+        <a href="{{ path('app_user_new') }}" class="btn btn-primary">
+            <i class="bi bi-plus-lg me-1"></i>
+            Додати користувача
+        </a>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="app-card-soft p-4">
+        <div class="table-responsive">
+            <table class="table align-middle mb-0">
+                <thead>
+                <tr>
+                    <th>Користувач</th>
+                    <th>Роль</th>
+                    <th>Учень</th>
+                    <th class="text-center">Дії</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.roles }}</td>
+                        <td>
+                            {% if user.studentId %}
+                                <a href="{{ path('app_student_show', {'id': user.studentId}) }}"
+                                   class="table-link-text"
+                                   target="_blank" rel="noopener noreferrer">
+                                    {{ user.studentName }}
+                                </a>
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            <div class="d-inline-flex gap-2">
+                                <a href="{{ path('app_user_edit', {'id': user.id}) }}"
+                                   class="btn btn-sm btn-outline-primary"
+                                   title="Редагувати">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+
+                                {{ include('user/_delete_form.html.twig', {
+                                    'user': user,
+                                    'button_label': '<i class="bi bi-trash"></i>',
+                                    'button_class': 'btn btn-sm btn-outline-danger'
+                                }) }}
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {{ include('user/_delete_modal.html.twig') }}
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/user/user.js') }}"></script>
+{% endblock %}

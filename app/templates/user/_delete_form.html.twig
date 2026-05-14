@@ -1,0 +1,9 @@
+<button type="button"
+        class="{{ button_class|default('btn btn-outline-danger') }} open-delete-user-modal"
+        data-user-id="{{ user.id }}"
+        data-user-name="{{ user.username }}"
+        data-delete-url="{{ path('app_user_delete', {'id': user.id}) }}"
+        data-bs-toggle="modal"
+        data-bs-target="#deleteUserModal">
+    {{ button_label|default('Видалити')|raw }}
+</button>

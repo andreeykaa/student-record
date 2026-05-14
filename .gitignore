@@ -1,0 +1,41 @@
+# Symfony / PHP dependencies
+/app/vendor/
+
+# Node dependencies
+/app/node_modules/
+
+# Symfony var
+/app/var/cache/
+/app/var/log/
+/app/var/sessions/
+
+# PHPUnit cache
+/app/.phpunit.cache/
+
+# Environment files
+/app/.env.dev
+/app/.env.test
+/app/.env.local
+/app/.env.*.local
+
+# IDE
+.idea/
+.vscode/
+/app/.idea/
+/app/.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+npm-debug.log
+yarn-error.log
+/app/npm-debug.log
+/app/yarn-error.log
+
+# Docker local database/data volumes if any
+/docker/mysql/data/
+/docker/db/data/
+/mysql-data/
+/data/

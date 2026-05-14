@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Новий учень{% endblock %}
+
+{% block page_header %}
+    <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-4">
+        <div>
+            <h1 class="h2 fw-bold mb-1">Новий учень</h1>
+            <p class="text-secondary mb-0">Додай основну інформацію про учня.</p>
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-10 col-xl-12">
+            <div class="app-card-soft p-5">
+                {{ include('student/_form.html.twig', {'button_label': 'Зберегти учня'}) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

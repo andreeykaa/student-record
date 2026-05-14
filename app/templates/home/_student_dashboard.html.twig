@@ -1,0 +1,106 @@
+<div class="row g-4 mb-4">
+    <div class="col-md-6 col-xl-4">
+        <div class="dashboard-stat-card">
+            <div class="dashboard-stat-label">Залишилось оплачених занять</div>
+            <p class="dashboard-stat-value">{{ remainingLessonsCount }}</p>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xl-4">
+        <div class="dashboard-stat-card">
+            <div class="dashboard-stat-label">Занять сьогодні</div>
+            <p class="dashboard-stat-value">{{ todayStudentLessons|length }}</p>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xl-4">
+        <div class="dashboard-stat-card">
+            <div class="dashboard-stat-label">Занять цього тижня</div>
+            <p class="dashboard-stat-value">{{ weekStudentLessonsCount }}</p>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 align-items-stretch">
+    <div class="col-12 col-xl-6 d-flex">
+        <div class="dashboard-section-card p-4 p-lg-5 w-100 h-100">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h2 class="h4 fw-bold mb-1">Майбутні заняття</h2>
+                </div>
+            </div>
+
+            {% if upcomingLessons is not empty %}
+                <div class="d-grid gap-3">
+                    {% for lesson in upcomingLessons %}
+                        <div class="schedule-item">
+                            <div class="schedule-line schedule-line--scheduled"></div>
+
+                            <div class="schedule-time">
+                                {{ lesson.startAt|date('d.m H:i', 'Europe/Kyiv') }}
+                            </div>
+
+                            <div class="flex-grow-1">
+                                <div class="schedule-title">
+                                    {{ lesson.title ?: 'Заняття' }}
+                                </div>
+
+                                <div class="schedule-meta">
+                                    Заплановане заняття
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    Найближчих занять немає.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="col-12 col-xl-6 d-flex">
+        <div class="dashboard-section-card p-4 p-lg-5 w-100 h-100">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h2 class="h4 fw-bold mb-1">Попередні заняття</h2>
+                </div>
+            </div>
+
+            {% if pastLessons is not empty %}
+                <div class="d-grid gap-3">
+                    {% for lesson in pastLessons %}
+                        <div class="schedule-item">
+                            <div class="schedule-line schedule-line--{{ lesson.status }}"></div>
+
+                            <div class="schedule-time">
+                                {{ lesson.startAt|date('d.m H:i', 'Europe/Kyiv') }}
+                            </div>
+
+                            <div class="flex-grow-1">
+                                <div class="schedule-title">
+                                    {{ lesson.title ?: 'Заняття' }}
+                                </div>
+
+                                <div class="schedule-meta">
+                                    {% if lesson.status == 'completed' %}
+                                        Проведено
+                                    {% elseif lesson.status == 'canceled' %}
+                                        Скасовано
+                                    {% else %}
+                                        Заплановано
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    Попередніх занять ще немає.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

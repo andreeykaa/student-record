@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Календар занять{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.20/index.global.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+{% endblock %}
+
+{% block page_header %}
+    <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-4">
+        <div>
+            <h1 class="h2 fw-bold mb-1">Календар занять</h1>
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="app-card-soft p-4">
+        <div id="calendar"
+             data-events-url="{{ path('app_lesson_events') }}"
+             data-create-url="{{ path('app_lesson_create') }}"
+             data-update-url-template="{{ path('app_lesson_update', {'id': '__ID__'}) }}"
+             data-update-time-url-template="{{ path('app_lesson_update_time', {'id': '__ID__'}) }}"
+             data-update-time-token="{{ csrf_token('lesson_update_time') }}"
+             data-open-lesson-id="{{ openLessonId }}"
+             data-initial-date="{{ initialDate }}">
+        </div>
+    </div>
+
+    {{ include('lesson/new_modal.html.twig') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.20/index.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.20/locales-all.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/uk.js"></script>
+    <script src="{{ asset('js/lesson/calendar.js') }}"></script>
+{% endblock %}

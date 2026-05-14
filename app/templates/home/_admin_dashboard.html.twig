@@ -1,0 +1,79 @@
+<div class="row g-4 mb-4">
+    <div class="col-md-6 col-xl-4">
+        <div class="dashboard-stat-card">
+            <div class="dashboard-stat-label">Усього учнів</div>
+            <p class="dashboard-stat-value">{{ studentsCount }}</p>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xl-4">
+        <div class="dashboard-stat-card">
+            <div class="dashboard-stat-label">Занять сьогодні</div>
+            <p class="dashboard-stat-value">{{ todayLessonsCount }}</p>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xl-4">
+        <div class="dashboard-stat-card">
+            <div class="dashboard-stat-label">Занять цього тижня</div>
+            <p class="dashboard-stat-value">{{ weekLessonsCount }}</p>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 align-items-stretch">
+    <div class="col-12 col-xl-12 d-flex">
+        <div class="dashboard-section-card p-4 p-lg-5 w-100 h-100">
+            <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-4">
+                <div>
+                    <h2 class="h4 fw-bold mb-1">Сьогоднішній розклад</h2>
+                    <p class="text-secondary mb-0">Усі заплановані заняття на сьогодні.</p>
+                </div>
+
+                <a href="{{ path('app_lesson_index') }}" class="btn btn-outline-primary">
+                    Перейти до календаря
+                </a>
+            </div>
+
+            {% if todayLessons is not empty %}
+                <div class="d-grid gap-3">
+                    {% for lesson in todayLessons %}
+                        <div class="schedule-item">
+                            <div class="schedule-line"></div>
+
+                            <div class="schedule-time">
+                                {{ lesson.startAt|date('H:i', 'Europe/Kyiv') }} - {{ lesson.endAt|date('H:i', 'Europe/Kyiv') }}
+                            </div>
+
+                            <div class="flex-grow-1">
+                                <div class="schedule-title">
+                                    {{ lesson.title ?: (lesson.student.firstName ~ ' ' ~ lesson.student.lastName) }}
+                                </div>
+
+                                <div class="schedule-meta">
+                                    {{ lesson.student.firstName }} {{ lesson.student.lastName }}
+                                    {% if lesson.notes %}
+                                        • {{ lesson.notes }}
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="d-flex align-items-center">
+                                <a href="{{ path('app_lesson_index', {
+                                    open_lesson: lesson.id,
+                                    date: lesson.startAt|date('Y-m-d', 'Europe/Kyiv')
+                                }) }}" class="btn btn-sm btn-outline-secondary">
+                                    Відкрити
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    На сьогодні занять не заплановано.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

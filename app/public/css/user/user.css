@@ -1,0 +1,67 @@
+.user-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, #2563eb, #0ea5e9);
+    box-shadow: 0 10px 24px rgba(37, 99, 235, 0.22);
+}
+
+.info-tile {
+    background: rgba(255, 255, 255, 0.78);
+    border: 1px solid rgba(233, 238, 245, 0.95);
+    border-radius: 1rem;
+    padding: 1rem 1.1rem;
+    height: 100%;
+}
+
+.info-tile-label {
+    font-size: 0.82rem;
+    color: var(--app-muted);
+    margin-bottom: 0.35rem;
+}
+
+.info-tile-value {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+a.table-link-text,
+a.table-link-text:link,
+a.table-link-text:visited,
+a.table-link-text:active {
+    color: inherit !important;
+    text-decoration: none !important;
+}
+
+a.table-link-text:hover {
+    color: #0d6efd !important;
+    text-decoration: underline !important;
+}
+
+.user-form-section {
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+    background: #f8f9fa;
+}
+
+.user-form-section-title {
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #1f2937;
+}
+
+.user-form-hint {
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    background: rgba(13, 110, 253, 0.08);
+    color: #495057;
+    font-size: 0.875rem;
+}

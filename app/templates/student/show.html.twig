@@ -1,0 +1,188 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Учень | {{ student.firstName }} {{ student.lastName }}{% endblock %}
+
+{% block page_header %}
+    <div class="d-flex flex-column flex-md-row align-items-md-center gap-3 mb-4">
+        <div>
+            <h1 class="h2 fw-bold mb-1">Картка учня {{ student.firstName }} {{ student.lastName }}</h1>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/student/student.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    {% set fullName = student.firstName ~ ' ' ~ student.lastName %}
+    {% set initials = (student.firstName|first ~ student.lastName|first)|upper %}
+
+    {% set statusMap = {
+        'completed': {
+            'label': 'Завершено',
+            'class': 'text-bg-success',
+            'icon': 'bi-check-circle-fill'
+        },
+        'canceled': {
+            'label': 'Скасовано',
+            'class': 'text-bg-danger',
+            'icon': 'bi-x-circle-fill'
+        },
+        'scheduled': {
+            'label': 'Заплановано',
+            'class': 'text-bg-primary',
+            'icon': 'bi-calendar-check-fill'
+        }
+    } %}
+
+    <div class="row g-4 align-items-stretch">
+        <div class="col-12 col-xl-8 d-flex">
+            <div class="app-card-soft p-4 p-lg-5 h-100 w-100">
+                <div class="d-flex flex-column flex-md-row align-items-md-center gap-3 mb-4">
+                    <div class="student-avatar">
+                        {{ initials }}
+                    </div>
+
+                    <div>
+                        <h2 class="h3 fw-bold mb-2">{{ fullName }}</h2>
+
+                        <div class="d-flex flex-wrap gap-2">
+                            {% if student.isActive %}
+                                <span class="badge rounded-pill text-bg-success px-3 py-2">
+                                    <i class="bi bi-check-circle me-1"></i> Активний
+                                </span>
+                            {% else %}
+                                <span class="badge rounded-pill text-bg-secondary px-3 py-2">
+                                    <i class="bi bi-pause-circle me-1"></i> Неактивний
+                                </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="info-tile">
+                            <div class="info-tile-label">ID</div>
+                            <p class="info-tile-value">#{{ student.id }}</p>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="info-tile">
+                            <div class="info-tile-label">Клас / курс</div>
+                            <p class="info-tile-value">{{ student.schoolGrade }}</p>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="info-tile">
+                            <div class="info-tile-label">Оплачені заняття</div>
+                            <p class="info-tile-value">{{ student.lessonsCount ? student.lessonsCount : '-' }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-xl-4 d-flex">
+            <div class="app-card-soft p-4 h-100 w-100">
+                <h3 class="h5 fw-bold mb-3">Дії</h3>
+
+                <div class="d-grid gap-2">
+                    <a href="{{ path('app_student_edit', {'id': student.id}) }}" class="btn btn-primary">
+                        <i class="bi bi-pencil-square me-1"></i>
+                        Редагувати учня
+                    </a>
+
+                    <a href="{{ path('app_student_index') }}" class="btn btn-outline-secondary">
+                        <i class="bi bi-list-ul me-1"></i>
+                        Повернутися до списку
+                    </a>
+                </div>
+
+                <div class="mt-auto pt-4 border-top">
+                    {{ include('student/_delete_form.html.twig', {
+                        'student': student,
+                        'button_label': 'Видалити учня',
+                        'button_class': 'btn btn-outline-danger w-100'
+                    }) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 d-flex">
+            <div class="app-card-soft p-4 p-lg-5 h-100 w-100">
+                <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-4">
+                    <div>
+                        <h2 class="h3 fw-bold mb-1">Заняття</h2>
+                    </div>
+                </div>
+
+                {% if studentLessons is not empty %}
+                    <div class="d-grid gap-3" id="student-lessons-wrapper">
+                        {% for studentLesson in studentLessons %}
+                            <div class="lesson-history-card lesson-page-item" data-index="{{ loop.index0 }}">
+                                <div class="lesson-history-main">
+                                    <div class="lesson-history-date">
+                                        <div class="lesson-history-day">
+                                            {{ studentLesson.startAt|date('d.m.Y', 'Europe/Kyiv') }}
+                                        </div>
+                                        <div class="lesson-history-time">
+                                            {{ studentLesson.startAt|date('H:i', 'Europe/Kyiv') }}
+                                            —
+                                            {{ studentLesson.endAt|date('H:i', 'Europe/Kyiv') }}
+                                        </div>
+                                    </div>
+
+                                    <div class="lesson-history-content">
+                                        <div class="d-flex flex-column flex-lg-row align-items-lg-start justify-content-between gap-3">
+                                            <div>
+                                                <h3 class="lesson-history-title">
+                                                    {{ studentLesson.title ?: 'Без назви заняття' }}
+                                                </h3>
+
+                                                {% if studentLesson.notes %}
+                                                    <p class="lesson-history-notes mb-0">
+                                                        {{ studentLesson.notes }}
+                                                    </p>
+                                                {% endif %}
+                                            </div>
+
+                                            {% set lessonStatus = statusMap[studentLesson.status] ?? statusMap['scheduled'] %}
+
+                                            <div>
+                                                <span class="badge rounded-pill {{ lessonStatus.class }}
+                                                px-3 py-2 d-inline-flex align-items-center gap-2">
+                                                    <i class="bi {{ lessonStatus.icon }}"></i>
+                                                    {{ lessonStatus.label }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div id="student-lessons-pagination" class="mt-4 d-flex justify-content-end"></div>
+                {% else %}
+                    <div class="empty-state">
+                        Для цього учня ще немає занять.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {{ include('student/_delete_modal.html.twig', {
+        'modal_id': 'deleteStudentModal' ~ student.id
+    }) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/student/student.js') }}"></script>
+    <script src="{{ asset('js/student/show.js') }}"></script>
+{% endblock %}

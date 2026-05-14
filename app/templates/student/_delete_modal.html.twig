@@ -1,0 +1,33 @@
+<div class="modal fade" id="deleteStudentModal" tabindex="-1" aria-labelledby="deleteStudentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteStudentModalLabel">Підтвердження видалення</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрити"></button>
+            </div>
+
+            <div class="modal-body">
+                <p class="mb-2">
+                    Ти справді хочеш видалити учня
+                    <strong class="student-name-delete"></strong>?
+                </p>
+                <p class="text-secondary mb-0">
+                    Цю дію не можна буде скасувати.
+                </p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                    Скасувати
+                </button>
+
+                <form method="post" action="" class="m-0 student-form-delete">
+                    <input type="hidden" name="_token" value="" class="student-token-delete">
+                    <button type="submit" class="btn btn-danger">
+                        Так, видалити
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Головна{% endblock %}
+
+{% block page_header %}
+    <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-4">
+        <div>
+            <h1 class="h2 fw-bold mb-1">Головна</h1>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/home/home.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    {% if is_granted('ROLE_ADMIN') %}
+        {{ include('home/_admin_dashboard.html.twig') }}
+    {% else %}
+        {{ include('home/_student_dashboard.html.twig') }}
+    {% endif %}
+{% endblock %}

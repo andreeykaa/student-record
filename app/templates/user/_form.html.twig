@@ -1,0 +1,43 @@
+{{ form_start(form) }}
+
+{{ form_errors(form) }}
+
+<div class="row g-4">
+    <div class="col-md-6">
+        {{ form_row(form.username) }}
+    </div>
+
+    {% if form.password is defined %}
+        <div class="col-md-6">
+            {{ form_row(form.password) }}
+        </div>
+    {% endif %}
+
+    {% if form.student is defined %}
+        <div class="col-12">
+            <div class="user-form-section">
+                <div class="user-form-section-title">
+                    Прив’язка до студента
+                </div>
+
+                <div class="row g-3 align-items-end">
+                    <div class="col-md-6">
+                        {{ form_row(form.student) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+<div class="d-flex flex-column flex-sm-row justify-content-end gap-2 mt-4">
+    <a href="{{ path('app_user_index') }}" class="btn btn-outline-secondary">
+        Скасувати
+    </a>
+
+    <button class="btn btn-primary px-4">
+        {{ button_label|default('Зберегти користувача') }}
+    </button>
+</div>
+
+{{ form_end(form) }}
