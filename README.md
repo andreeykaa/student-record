@@ -624,7 +624,3 @@ http://localhost:8081
 ```
 
 ---
-
-# 19. Автор
-
-Student Record project.
