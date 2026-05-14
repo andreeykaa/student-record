@@ -625,42 +625,6 @@ http://localhost:8081
 
 ---
 
-# 19. Що не потрібно комітити в GitHub
-
-У репозиторій не потрібно додавати:
-
-```text
-app/vendor/
-app/node_modules/
-app/var/
-app/.env.local
-app/.env.dev
-app/.env.test
-```
-
-Ці файли або папки створюються локально і не повинні зберігатися в GitHub.
-
-У GitHub повинні бути:
-
-```text
-app/src/
-app/templates/
-app/config/
-app/migrations/
-app/public/
-app/composer.json
-app/composer.lock
-app/package.json
-app/package-lock.json
-Dockerfile
-docker-compose.yml
-docker/
-.gitignore
-README.md
-```
-
----
-
-# 20. Автор
+# 19. Автор
 
 Student Record project.
