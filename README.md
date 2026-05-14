@@ -188,3 +188,10 @@ docker compose exec app sh -c "cd app && chmod -R 777 var"
 ports:
   - "8081:80"
 ```
+
+Після цього:
+
+```bash
+docker compose down
+docker compose up -d --build
+```
